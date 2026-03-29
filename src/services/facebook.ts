@@ -11,6 +11,6 @@ export const facebook: EmbedProvider = {
     
     const cx = options.className ? ` class="${options.className}"` : '';
     // Facebook iframes normally require dynamic sizing, so we constrain its width strictly.
-    return `<div${cx}><iframe src="${embedUrl}" width="500" height="400" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe></div>`;
+    return `<iframe${cx} src="${embedUrl}" width="500" height="400" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
   }
 };

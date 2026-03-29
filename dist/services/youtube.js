@@ -18,6 +18,6 @@ export const youtube = {
         }
         const src = `https://www.youtube.com/embed/${videoId}${startQuery}`;
         const cx = options.className ? ` class="${options.className}"` : '';
-        return `<div${cx}><iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        return `<iframe${cx} src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
     }
 };

@@ -6,11 +6,9 @@ export const reddit = {
         // Reddit allows embedding via its secure blockquote script injection
         const cx = options.className ? ` class="${options.className}"` : '';
         return `
-<div${cx}>
-  <blockquote class="reddit-embed-bq" data-embed-showedits="false">
+<blockquote${cx} class="reddit-embed-bq" data-embed-showedits="false">
     <a href="${url.href}"></a>
   </blockquote>
-  <script async="" src="https://embed.reddit.com/widgets.js" charset="UTF-8"></script>
-</div>`.trim();
+  <script async="" src="https://embed.reddit.com/widgets.js" charset="UTF-8"></script>`.trim();
     }
 };

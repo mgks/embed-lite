@@ -9,6 +9,6 @@ export const figma: EmbedProvider = {
     const embedUrl = `https://www.figma.com/embed?embed_host=docmd&url=${encodeURIComponent(url.toString())}`;
     const cx = options.className ? ` class="${options.className}"` : '';
     
-    return `<div${cx}><iframe style="border: none;" width="100%" height="450" src="${embedUrl}" allowfullscreen></iframe></div>`;
+    return `<iframe${cx} style="border: none;" width="100%" height="450" src="${embedUrl}" allowfullscreen></iframe>`;
   }
 };

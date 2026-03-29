@@ -9,6 +9,6 @@ export const codepen: EmbedProvider = {
     const embedUrl = `https://codepen.io${url.pathname.replace('/pen/', '/embed/')}?default-tab=html%2Cresult`;
     const cx = options.className ? ` class="${options.className}"` : '';
     
-    return `<div${cx}><iframe height="300" style="width: 100%; border: none;" scrolling="no" title="CodePen Embed" src="${embedUrl}" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe></div>`;
+    return `<iframe${cx} height="300" style="width: 100%; border: none;" scrolling="no" title="CodePen Embed" src="${embedUrl}" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>`;
   }
 };

@@ -7,6 +7,6 @@ export const vimeo = {
             return null;
         const src = `https://player.vimeo.com/video/${videoId}`;
         const cx = options.className ? ` class="${options.className}"` : '';
-        return `<div${cx}><iframe src="${src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+        return `<iframe${cx} src="${src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     }
 };

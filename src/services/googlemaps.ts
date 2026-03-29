@@ -7,6 +7,6 @@ export const googlemaps: EmbedProvider = {
   generate: (url, options = {}) => {
     const cx = options.className ? ` class="${options.className}"` : '';
     // Map bounds are perfectly styled when aspect-ratio natively inherits from the docmd container.
-    return `<div${cx}><iframe src="${url.toString()}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+    return `<iframe${cx} src="${url.toString()}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
   }
 };

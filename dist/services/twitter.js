@@ -6,11 +6,9 @@ export const twitter = {
         const cx = options.className ? ` class="${options.className}"` : '';
         // Twitter/X uses a standard blockquote + widgets.js payload for secure embedding without iframes.
         return `
-<div${cx}>
-  <blockquote class="twitter-tweet">
+<blockquote${cx} class="twitter-tweet">
     <a href="${url.href}"></a>
   </blockquote>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>`.trim();
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`.trim();
     }
 };

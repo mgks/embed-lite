@@ -10,6 +10,6 @@ export const soundcloud: EmbedProvider = {
     const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url.toString())}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
     const cx = options.className ? ` class="${options.className}"` : '';
     
-    return `<div${cx}><iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe></div>`;
+    return `<iframe${cx} width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`;
   }
 };
