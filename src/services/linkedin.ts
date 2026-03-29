@@ -4,19 +4,22 @@ export const linkedin: EmbedProvider = {
   name: 'LinkedIn',
   match: (url) => url.hostname.includes('linkedin.com') && (url.pathname.includes('/posts/') || url.pathname.includes('/feed/update/')),
   generate: (url, options = {}) => {
-    let activityId = '';
+    let urn = '';
     
-    if (url.pathname.includes('/feed/update/urn:li:activity:')) {
-      // Handles native embed URLs e.g. /feed/update/urn:li:activity:123456789
-      activityId = url.pathname.split('urn:li:activity:')[1]?.split(/[/?#]/)[0];
-    } else if (url.pathname.includes('-activity-')) {
-      // Handles generic user post URLs e.g. /posts/username-activity-123456789-xyz
-      activityId = url.pathname.split('-activity-')[1]?.split('-')[0];
+    if (url.pathname.includes('/feed/update/urn:li:')) {
+      // Handles native embed URLs safely extracting raw URN formats
+      urn = url.pathname.split('/feed/update/')[1]?.split(/[/?#]/)[0];
+    } else {
+      // Captures universally generated user post URLs identically resolving internal tracking types natively (e.g., ugcPost, activity, share)
+      const match = url.pathname.match(/-(activity|ugcPost|share)-(\d+)/);
+      if (match) {
+        urn = `urn:li:${match[1]}:${match[2]}`;
+      }
     }
     
-    if (!activityId) return null;
+    if (!urn) return null;
 
-    const embedUrl = `https://www.linkedin.com/embed/feed/update/urn:li:activity:${activityId}`;
+    const embedUrl = `https://www.linkedin.com/embed/feed/update/${urn}`;
     const cx = options.className ? ` class="${options.className}"` : '';
     
     // LinkedIn natively scales internally but bounds are structurally enforced via typical heights
