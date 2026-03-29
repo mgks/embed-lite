@@ -117,10 +117,10 @@
 
         .preview-wrapper {
             margin-top: 0.5rem; width: 100%; display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 1.5rem; min-height: 200px;
+            background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 0; min-height: 350px; overflow: hidden;
         }
-        .preview-wrapper iframe { width: 100%; max-width: 100%; border: none !important; border-radius: 8px; }
-        .error-state { color: #ef4444; font-weight: 500; font-family: system-ui; text-align: center; width: 100%;}
+        .preview-wrapper iframe { width: 100%; height: 100%; min-height: 350px; max-height: 600px; aspect-ratio: 16/9; border: none !important; }
+        .error-state { color: #ef4444; font-weight: 500; font-family: system-ui; text-align: center; width: 100%; padding: 2rem;}
 
         /* Services Tags & Footer */
         .services-wrapper { width: 100%; margin: 3rem 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
