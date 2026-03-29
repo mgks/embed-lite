@@ -1,13 +1,23 @@
-<p align="center">
-  <img width="80" alt="Embed Lite Logo" src="https://github.com/user-attachments/assets/ea5d23f2-3758-422e-9569-c0e465b24eed" />
+<div align="center">
+<p>
+  <img width="80" alt="Embed Lite Logo" src="https://github.com/mgks/embed-lite/blob/main/public/src/favicons/apple-touch-icon.png?raw=true" />
   <h1 align="center">Embed Lite</h1>
 </p>
 
-<p align="center">
+<p>
   <a href="https://npmjs.org/package/embed-lite"><img src="https://img.shields.io/npm/v/embed-lite.svg" alt="npm version"></a>
   <a href="https://bundlephobia.com/package/embed-lite"><img src="https://img.shields.io/bundlephobia/minzip/embed-lite" alt="Bundle Size"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
 </p>
+
+<p>
+  <h4>
+    <a href="https://embed.mgks.dev">🚀 Open Web App</a>
+  </h4>
+</p>
+</div>
+
+<br />
 
 **Embed Lite** is an ultra-fast, zero-dependency Typescript and JavaScript library for statically mapping raw URLs directly into secure, ready-to-render HTML iframes or blockquotes entirely on the fly.
 
