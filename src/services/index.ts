@@ -11,6 +11,9 @@ import { soundcloud } from './soundcloud.js';
 import { instagram } from './instagram.js';
 import { facebook } from './facebook.js';
 import { googlemaps } from './googlemaps.js';
+import { tiktok } from './tiktok.js';
+import { github } from './github.js';
+import { linkedin } from './linkedin.js';
 
 export const providers: EmbedProvider[] = [
   youtube,
@@ -23,5 +26,8 @@ export const providers: EmbedProvider[] = [
   soundcloud,
   instagram,
   facebook,
+  tiktok,
+  github,
+  linkedin,
   googlemaps
 ];
