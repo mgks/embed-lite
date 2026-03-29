@@ -1,6 +1,6 @@
 {
   "name": "embed-lite",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zero-dependency, static URL-to-HTML embed parser for markdown and browser.",
   "type": "module",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "prep": "rm -rf dist node_modules package-lock.json && npm install && npm run build",
-    "build": "tsc && npm run build:cdn && npm run build:cdn:min",
+    "build": "tsc && npm run build:cdn && npm run build:cdn:min && cp -r public/* dist/",
     "build:cdn": "esbuild src/index.ts --bundle --global-name=embedLite --outfile=dist/embed-lite.global.js",
     "build:cdn:min": "esbuild src/index.ts --bundle --global-name=embedLite --outfile=dist/embed-lite.global.min.js --minify"
   },
