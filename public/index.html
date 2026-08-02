@@ -34,7 +34,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./src/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./src/favicons/favicon-16x16.png">
     <link rel="apple-touch-icon" href="./src/favicons/apple-touch-icon.png">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
     <link rel="stylesheet" href="./src/style.css">
 
@@ -69,93 +70,62 @@
     <a href="https://www.npmjs.com/package/embed-lite" target="_blank" aria-label="npm package" class="nav-link">npm</a>
 </nav>
 
-<main class="layout">
+<main class="container">
 
-    <!-- LEFT COLUMN: API usage & code examples -->
-    <aside class="col-left">
-        <section class="docs">
-            <h2 class="docs-heading">Install</h2>
-            <div class="snippet">
-                <code class="snippet-code" id="code-install">npm install embed-lite</code>
-                <button class="snippet-copy" data-copy="code-install" aria-label="Copy install command">Copy</button>
+    <header class="hero">
+        <img src="./src/favicons/android-chrome-192x192.png" alt="embed-lite logo" width="56" height="56" class="logo">
+        <h1>embed-lite</h1>
+        <p class="tagline">Zero-dependency URL-to-HTML embed parser. No API calls, no latency.</p>
+
+        <div class="install-row">
+            <div class="install-box">
+                <code id="code-install">npm install embed-lite</code>
+                <button class="copy-btn copy-inline" data-copy="code-install" aria-label="Copy install command">Copy</button>
+            </div>
+            <a href="https://github.com/mgks/embed-lite#readme" target="_blank" class="docs-btn">Docs ↗</a>
+        </div>
+    </header>
+
+    <section class="demo">
+        <label for="url-input" class="label">Try any supported URL</label>
+        <div class="input-row">
+            <input type="url" id="url-input" placeholder="https://youtube.com/watch?v=dQw4w9WgXcQ" autofocus>
+            <button id="render-btn">Render</button>
+        </div>
+
+        <div id="results-container" class="results">
+            <div class="result-block">
+                <div class="result-head">Preview</div>
+                <div class="preview" id="preview-output"></div>
             </div>
 
-            <h2 class="docs-heading">Import</h2>
-            <div class="snippet">
-                <code class="snippet-code" id="code-import">import { embed } from 'embed-lite';</code>
-                <button class="snippet-copy" data-copy="code-import" aria-label="Copy import statement">Copy</button>
-            </div>
-
-            <h2 class="docs-heading">Basic usage</h2>
-            <div class="snippet">
-                <pre class="snippet-pre"><code id="code-usage">const result = embed('https://youtube.com/watch?v=dQw4w9WgXcQ');
-
-if (result) {
-  console.log(result.html);
-  // &lt;iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" ...&gt;&lt;/iframe&gt;
-}</code></pre>
-                <button class="snippet-copy snippet-copy-block" data-copy="code-usage" aria-label="Copy usage example">Copy</button>
-            </div>
-
-            <h2 class="docs-heading">With options</h2>
-            <div class="snippet">
-                <pre class="snippet-pre"><code id="code-options">const result = embed(url, {
-  className: 'my-embed-wrapper'
-});</code></pre>
-                <button class="snippet-copy snippet-copy-block" data-copy="code-options" aria-label="Copy options example">Copy</button>
-            </div>
-
-            <div class="supported-list">
-                <div class="supported-label">14 providers</div>
-                <div class="tags">
-                    <span class="tag">YouTube</span>
-                    <span class="tag">Vimeo</span>
-                    <span class="tag">Twitter / X</span>
-                    <span class="tag">Spotify</span>
-                    <span class="tag">SoundCloud</span>
-                    <span class="tag">Instagram</span>
-                    <span class="tag">Facebook</span>
-                    <span class="tag">Reddit</span>
-                    <span class="tag">TikTok</span>
-                    <span class="tag">LinkedIn</span>
-                    <span class="tag">GitHub Gist</span>
-                    <span class="tag">Google Maps</span>
-                    <span class="tag">CodePen</span>
-                    <span class="tag">Figma</span>
+            <div class="result-block">
+                <div class="result-head">
+                    <span>HTML output</span>
+                    <button class="copy-btn" id="copy-output">Copy</button>
                 </div>
+                <pre id="code-output" class="code"></pre>
             </div>
-        </section>
-    </aside>
+        </div>
+    </section>
 
-    <!-- RIGHT COLUMN: Interactive demo + logo -->
-    <section class="col-right">
-        <header class="header">
-            <img src="./src/favicons/android-chrome-192x192.png" alt="embed-lite logo" width="48" height="48" class="logo">
-            <h1>embed-lite</h1>
-            <p class="tagline">Zero-dependency URL-to-HTML embed parser. No API calls, no latency.</p>
-        </header>
-
-        <div class="panel">
-            <label for="url-input" class="label">Try any supported URL</label>
-            <div class="input-row">
-                <input type="url" id="url-input" placeholder="https://youtube.com/watch?v=dQw4w9WgXcQ" autofocus>
-                <button id="render-btn">Render</button>
-            </div>
-
-            <div id="results-container" class="results">
-                <div class="result-block">
-                    <div class="result-head">Preview</div>
-                    <div class="preview" id="preview-output"></div>
-                </div>
-
-                <div class="result-block">
-                    <div class="result-head">
-                        <span>HTML output</span>
-                        <button id="copy-output" class="copy-btn">Copy</button>
-                    </div>
-                    <pre id="code-output" class="code"></pre>
-                </div>
-            </div>
+    <section class="providers">
+        <div class="providers-label">Supports 14 platforms</div>
+        <div class="tags">
+            <span class="tag">YouTube</span>
+            <span class="tag">Vimeo</span>
+            <span class="tag">Twitter / X</span>
+            <span class="tag">Spotify</span>
+            <span class="tag">SoundCloud</span>
+            <span class="tag">Instagram</span>
+            <span class="tag">Facebook</span>
+            <span class="tag">Reddit</span>
+            <span class="tag">TikTok</span>
+            <span class="tag">LinkedIn</span>
+            <span class="tag">GitHub Gist</span>
+            <span class="tag">Google Maps</span>
+            <span class="tag">CodePen</span>
+            <span class="tag">Figma</span>
         </div>
     </section>
 
