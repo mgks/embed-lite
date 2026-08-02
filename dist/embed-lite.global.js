@@ -244,21 +244,165 @@ var embedLite = (() => {
     }
   };
 
+  // src/services/dailymotion.ts
+  var dailymotion = {
+    name: "Dailymotion",
+    match: (url) => url.hostname.includes("dailymotion.com"),
+    generate: (url, options = {}) => {
+      const videoId = url.pathname.split("/video/")[1]?.split(/[/?#&_]/)[0];
+      if (!videoId) return null;
+      const src = `https://www.dailymotion.com/embed/video/${videoId}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
+    }
+  };
+
+  // src/services/bilibili.ts
+  var bilibili = {
+    name: "Bilibili",
+    match: (url) => url.hostname.includes("bilibili.com"),
+    generate: (url, options = {}) => {
+      const bvid = url.pathname.split("/video/")[1]?.split(/[/?#]/)[0];
+      if (!bvid || !bvid.startsWith("BV")) return null;
+      const src = `https://player.bilibili.com/player.html?bvid=${bvid}&high_quality=1`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen scrolling="no"></iframe>`;
+    }
+  };
+
+  // src/services/loom.ts
+  var loom = {
+    name: "Loom",
+    match: (url) => url.hostname.includes("loom.com"),
+    generate: (url, options = {}) => {
+      const videoId = url.pathname.split("/share/")[1]?.split(/[/?#]/)[0];
+      if (!videoId) return null;
+      const src = `https://www.loom.com/embed/${videoId}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
+    }
+  };
+
+  // src/services/applemusic.ts
+  var applemusic = {
+    name: "Apple Music",
+    match: (url) => url.hostname.includes("music.apple.com"),
+    generate: (url, options = {}) => {
+      const src = `https://embed.music.apple.com${url.pathname}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="175" frameborder="0" allow="autoplay *; encrypted-media *;"></iframe>`;
+    }
+  };
+
+  // src/services/giphy.ts
+  var giphy = {
+    name: "Giphy",
+    match: (url) => url.hostname.includes("giphy.com"),
+    generate: (url, options = {}) => {
+      let gifId;
+      if (url.pathname.includes("/embed/")) {
+        gifId = url.pathname.split("/embed/")[1]?.split(/[/?#]/)[0];
+      } else {
+        const segment = url.pathname.split("/gifs/")[1]?.split(/[/?#]/)[0];
+        gifId = segment?.split("-").pop();
+      }
+      if (!gifId) return null;
+      const src = `https://giphy.com/embed/${gifId}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="480" height="360" frameborder="0" allowfullscreen></iframe>`;
+    }
+  };
+
+  // src/services/streamable.ts
+  var streamable = {
+    name: "Streamable",
+    match: (url) => url.hostname.includes("streamable.com"),
+    generate: (url, options = {}) => {
+      const videoId = url.pathname.slice(1).split(/[/?#]/)[0];
+      if (!videoId) return null;
+      const src = `https://streamable.com/e/${videoId}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
+    }
+  };
+
+  // src/services/pastebin.ts
+  var pastebin = {
+    name: "Pastebin",
+    match: (url) => url.hostname.includes("pastebin.com"),
+    generate: (url, options = {}) => {
+      const pasteId = url.pathname.slice(1).split(/[/?#]/)[0];
+      if (!pasteId || pasteId === "raw" || pasteId.length < 4) return null;
+      const src = `https://pastebin.com/embed/${pasteId}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="400" frameborder="0"></iframe>`;
+    }
+  };
+
+  // src/services/wistia.ts
+  var wistia = {
+    name: "Wistia",
+    match: (url) => url.hostname.includes("wistia.com") || url.hostname.includes("wi.st"),
+    generate: (url, options = {}) => {
+      const mediaId = url.pathname.split("/medias/")[1]?.split(/[/?#]/)[0];
+      if (!mediaId) return null;
+      const src = `https://fast.wistia.net/embed/iframe/${mediaId}`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
+    }
+  };
+
+  // src/services/imgur.ts
+  var imgur = {
+    name: "Imgur",
+    match: (url) => url.hostname.includes("imgur.com") && url.pathname.includes("/a/"),
+    generate: (url, options = {}) => {
+      const albumId = url.pathname.split("/a/")[1]?.split(/[/?#]/)[0];
+      if (!albumId) return null;
+      const src = `https://imgur.com/a/${albumId}/embed/pubsimple`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>`;
+    }
+  };
+
+  // src/services/googledrive.ts
+  var googledrive = {
+    name: "Google Drive",
+    match: (url) => url.hostname.includes("drive.google.com") && url.pathname.includes("/file/d/"),
+    generate: (url, options = {}) => {
+      const fileId = url.pathname.split("/file/d/")[1]?.split(/[/?#]/)[0];
+      if (!fileId) return null;
+      const src = `https://drive.google.com/file/d/${fileId}/preview`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
+    }
+  };
+
   // src/services/index.ts
   var providers = [
     youtube,
     vimeo,
+    dailymotion,
+    bilibili,
     twitter,
     spotify,
+    applemusic,
+    soundcloud,
     codepen,
     figma,
     reddit,
-    soundcloud,
     instagram,
     facebook,
+    giphy,
     tiktok,
+    streamable,
     github,
     linkedin,
+    loom,
+    pastebin,
+    wistia,
+    imgur,
+    googledrive,
     googlemaps
   ];
 

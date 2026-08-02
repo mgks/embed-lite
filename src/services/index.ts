@@ -14,20 +14,40 @@ import { googlemaps } from './googlemaps.js';
 import { tiktok } from './tiktok.js';
 import { github } from './github.js';
 import { linkedin } from './linkedin.js';
+import { dailymotion } from './dailymotion.js';
+import { bilibili } from './bilibili.js';
+import { loom } from './loom.js';
+import { applemusic } from './applemusic.js';
+import { giphy } from './giphy.js';
+import { streamable } from './streamable.js';
+import { pastebin } from './pastebin.js';
+import { wistia } from './wistia.js';
+import { imgur } from './imgur.js';
+import { googledrive } from './googledrive.js';
 
 export const providers: EmbedProvider[] = [
   youtube,
   vimeo,
+  dailymotion,
+  bilibili,
   twitter,
   spotify,
+  applemusic,
+  soundcloud,
   codepen,
   figma,
   reddit,
-  soundcloud,
   instagram,
   facebook,
+  giphy,
   tiktok,
+  streamable,
   github,
   linkedin,
+  loom,
+  pastebin,
+  wistia,
+  imgur,
+  googledrive,
   googlemaps
 ];
