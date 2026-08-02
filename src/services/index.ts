@@ -20,9 +20,7 @@ import { loom } from './loom.js';
 import { applemusic } from './applemusic.js';
 import { giphy } from './giphy.js';
 import { streamable } from './streamable.js';
-import { pastebin } from './pastebin.js';
 import { wistia } from './wistia.js';
-import { imgur } from './imgur.js';
 import { googledrive } from './googledrive.js';
 
 export const providers: EmbedProvider[] = [
@@ -45,9 +43,7 @@ export const providers: EmbedProvider[] = [
   github,
   linkedin,
   loom,
-  pastebin,
   wistia,
-  imgur,
   googledrive,
   googlemaps
 ];

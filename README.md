@@ -86,10 +86,10 @@ We currently actively process and intelligently map the following URLs into expl
 | ✅ Vimeo | ✅ SoundCloud | ✅ Facebook | ✅ Figma |
 | ✅ Dailymotion | ✅ Apple Music | ✅ X / Twitter | ✅ Google Maps |
 | ✅ TikTok | | ✅ Reddit | ✅ GitHub Gists |
-| ✅ Bilibili | | ✅ LinkedIn | ✅ Pastebin |
-| ✅ Streamable | | | ✅ Google Drive |
-| ✅ Loom | | | ✅ Imgur |
-| ✅ Wistia | | | ✅ Giphy |
+| ✅ Bilibili | | ✅ LinkedIn | ✅ Google Drive |
+| ✅ Streamable | | | ✅ Giphy |
+| ✅ Loom | | | |
+| ✅ Wistia | | | |
 
 ## API Reference
 

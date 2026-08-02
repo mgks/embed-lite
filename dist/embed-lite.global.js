@@ -326,19 +326,6 @@ var embedLite = (() => {
     }
   };
 
-  // src/services/pastebin.ts
-  var pastebin = {
-    name: "Pastebin",
-    match: (url) => url.hostname.includes("pastebin.com"),
-    generate: (url, options = {}) => {
-      const pasteId = url.pathname.slice(1).split(/[/?#]/)[0];
-      if (!pasteId || pasteId === "raw" || pasteId.length < 4) return null;
-      const src = `https://pastebin.com/embed/${pasteId}`;
-      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
-      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="400" frameborder="0"></iframe>`;
-    }
-  };
-
   // src/services/wistia.ts
   var wistia = {
     name: "Wistia",
@@ -349,19 +336,6 @@ var embedLite = (() => {
       const src = `https://fast.wistia.net/embed/iframe/${mediaId}`;
       const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
       return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
-    }
-  };
-
-  // src/services/imgur.ts
-  var imgur = {
-    name: "Imgur",
-    match: (url) => url.hostname.includes("imgur.com") && url.pathname.includes("/a/"),
-    generate: (url, options = {}) => {
-      const albumId = url.pathname.split("/a/")[1]?.split(/[/?#]/)[0];
-      if (!albumId) return null;
-      const src = `https://imgur.com/a/${albumId}/embed/pubsimple`;
-      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
-      return `<iframe${cx} src="${escapeAttr(src)}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>`;
     }
   };
 
@@ -399,9 +373,7 @@ var embedLite = (() => {
     github,
     linkedin,
     loom,
-    pastebin,
     wistia,
-    imgur,
     googledrive,
     googlemaps
   ];
