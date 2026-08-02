@@ -3,14 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>embed-lite</title>
+
+    <!-- Primary Meta Tags -->
+    <title>embed-lite — Zero-Dependency URL-to-HTML Embed Parser for JavaScript</title>
+    <meta name="title" content="embed-lite — Zero-Dependency URL-to-HTML Embed Parser for JavaScript">
+    <meta name="description" content="embed-lite is a zero-dependency TypeScript library that converts URLs to secure HTML iframe embeds. Supports YouTube, Vimeo, Twitter/X, Spotify, TikTok, Instagram, Reddit, CodePen, Figma and more. No oEmbed API calls required. Works in browser and Node.js.">
+    <meta name="keywords" content="embed, iframe, url embed, oembed, javascript embed, typescript embed, youtube embed, twitter embed, spotify embed, tiktok embed, instagram embed, zero dependency, url to html, static embed, react embed, markdown embed">
+    <meta name="author" content="Ghazi (@mgks)">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://embed.mgks.dev">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://embed.mgks.dev/">
+    <meta property="og:title" content="embed-lite — Zero-Dependency URL-to-HTML Embed Parser">
+    <meta property="og:description" content="Convert URLs to secure HTML iframe embeds without API calls. Supports YouTube, Twitter, Spotify, TikTok, CodePen, Figma and 14+ platforms. Zero dependencies, browser and Node.js.">
+    <meta property="og:image" content="https://embed.mgks.dev/src/favicons/android-chrome-512x512.png">
+    <meta property="og:site_name" content="embed-lite">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://embed.mgks.dev/">
+    <meta name="twitter:title" content="embed-lite — Zero-Dependency URL-to-HTML Embed Parser">
+    <meta name="twitter:description" content="Convert URLs to secure HTML iframe embeds without API calls. 14+ platforms supported. Zero dependencies.">
+    <meta name="twitter:image" content="https://embed.mgks.dev/src/favicons/android-chrome-512x512.png">
+    <meta name="twitter:creator" content="@mgks">
+
+    <!-- Favicons -->
     <link rel="icon" href="./src/favicons/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="./src/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./src/favicons/favicon-16x16.png">
     <link rel="apple-touch-icon" href="./src/favicons/apple-touch-icon.png">
     <meta name="theme-color" content="#0a0a0a">
-    <meta name="description" content="Zero-dependency URL-to-HTML embed parser. Maps URLs to secure iframe embeds without oEmbed API calls.">
+
     <link rel="stylesheet" href="./src/style.css">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "embed-lite",
+        "description": "Zero-dependency TypeScript library that converts URLs to secure HTML iframe embeds without oEmbed API calls.",
+        "codeRepository": "https://github.com/mgks/embed-lite",
+        "programmingLanguage": "TypeScript",
+        "author": { "@type": "Person", "name": "Ghazi", "url": "https://mgks.dev" },
+        "license": "https://github.com/mgks/embed-lite/blob/main/LICENSE",
+        "runtimePlatform": "Node.js, Browser"
+    }
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZHZQ0K9EN6"></script>
     <script>
@@ -23,66 +65,108 @@
 <body>
 
 <nav class="nav">
-    <a href="https://github.com/mgks/embed-lite" target="_blank" aria-label="GitHub" class="nav-link">GitHub</a>
-    <a href="https://www.npmjs.com/package/embed-lite" target="_blank" aria-label="npm" class="nav-link">npm</a>
+    <a href="https://github.com/mgks/embed-lite" target="_blank" aria-label="GitHub Repository" class="nav-link">GitHub</a>
+    <a href="https://www.npmjs.com/package/embed-lite" target="_blank" aria-label="npm package" class="nav-link">npm</a>
 </nav>
 
-<main class="container">
-    <header class="header">
-        <img src="./src/favicons/android-chrome-192x192.png" alt="" width="56" height="56" class="logo">
-        <h1>embed-lite</h1>
-        <p class="tagline">Static URL-to-HTML embed parser. Zero dependencies, zero API calls, zero latency.</p>
-        <code class="install">npm install embed-lite</code>
-    </header>
+<main class="layout">
 
-    <section class="panel">
-        <label for="url-input" class="label">Try any supported URL</label>
-        <div class="input-row">
-            <input type="url" id="url-input" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" autofocus>
-            <button id="render-btn">Render</button>
-        </div>
-
-        <div id="results-container" class="results">
-            <div class="result-block">
-                <div class="result-head">Preview</div>
-                <div class="preview" id="preview-output"></div>
+    <!-- LEFT COLUMN: API usage & code examples -->
+    <aside class="col-left">
+        <section class="docs">
+            <h2 class="docs-heading">Install</h2>
+            <div class="snippet">
+                <code class="snippet-code" id="code-install">npm install embed-lite</code>
+                <button class="snippet-copy" data-copy="code-install" aria-label="Copy install command">Copy</button>
             </div>
 
-            <div class="result-block">
-                <div class="result-head">
-                    <span>HTML</span>
-                    <button id="copy-btn" class="copy-btn">Copy</button>
+            <h2 class="docs-heading">Import</h2>
+            <div class="snippet">
+                <code class="snippet-code" id="code-import">import { embed } from 'embed-lite';</code>
+                <button class="snippet-copy" data-copy="code-import" aria-label="Copy import statement">Copy</button>
+            </div>
+
+            <h2 class="docs-heading">Basic usage</h2>
+            <div class="snippet">
+                <pre class="snippet-pre"><code id="code-usage">const result = embed('https://youtube.com/watch?v=dQw4w9WgXcQ');
+
+if (result) {
+  console.log(result.html);
+  // &lt;iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" ...&gt;&lt;/iframe&gt;
+}</code></pre>
+                <button class="snippet-copy snippet-copy-block" data-copy="code-usage" aria-label="Copy usage example">Copy</button>
+            </div>
+
+            <h2 class="docs-heading">With options</h2>
+            <div class="snippet">
+                <pre class="snippet-pre"><code id="code-options">const result = embed(url, {
+  className: 'my-embed-wrapper'
+});</code></pre>
+                <button class="snippet-copy snippet-copy-block" data-copy="code-options" aria-label="Copy options example">Copy</button>
+            </div>
+
+            <div class="supported-list">
+                <div class="supported-label">14 providers</div>
+                <div class="tags">
+                    <span class="tag">YouTube</span>
+                    <span class="tag">Vimeo</span>
+                    <span class="tag">Twitter / X</span>
+                    <span class="tag">Spotify</span>
+                    <span class="tag">SoundCloud</span>
+                    <span class="tag">Instagram</span>
+                    <span class="tag">Facebook</span>
+                    <span class="tag">Reddit</span>
+                    <span class="tag">TikTok</span>
+                    <span class="tag">LinkedIn</span>
+                    <span class="tag">GitHub Gist</span>
+                    <span class="tag">Google Maps</span>
+                    <span class="tag">CodePen</span>
+                    <span class="tag">Figma</span>
                 </div>
-                <pre id="code-output" class="code"></pre>
+            </div>
+        </section>
+    </aside>
+
+    <!-- RIGHT COLUMN: Interactive demo + logo -->
+    <section class="col-right">
+        <header class="header">
+            <img src="./src/favicons/android-chrome-192x192.png" alt="embed-lite logo" width="48" height="48" class="logo">
+            <h1>embed-lite</h1>
+            <p class="tagline">Zero-dependency URL-to-HTML embed parser. No API calls, no latency.</p>
+        </header>
+
+        <div class="panel">
+            <label for="url-input" class="label">Try any supported URL</label>
+            <div class="input-row">
+                <input type="url" id="url-input" placeholder="https://youtube.com/watch?v=dQw4w9WgXcQ" autofocus>
+                <button id="render-btn">Render</button>
+            </div>
+
+            <div id="results-container" class="results">
+                <div class="result-block">
+                    <div class="result-head">Preview</div>
+                    <div class="preview" id="preview-output"></div>
+                </div>
+
+                <div class="result-block">
+                    <div class="result-head">
+                        <span>HTML output</span>
+                        <button id="copy-output" class="copy-btn">Copy</button>
+                    </div>
+                    <pre id="code-output" class="code"></pre>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="services">
-        <div class="services-label">Supports</div>
-        <div class="tags">
-            <span class="tag">YouTube</span>
-            <span class="tag">Vimeo</span>
-            <span class="tag">Twitter / X</span>
-            <span class="tag">Spotify</span>
-            <span class="tag">SoundCloud</span>
-            <span class="tag">Instagram</span>
-            <span class="tag">Facebook</span>
-            <span class="tag">Reddit</span>
-            <span class="tag">TikTok</span>
-            <span class="tag">LinkedIn</span>
-            <span class="tag">GitHub Gist</span>
-            <span class="tag">Google Maps</span>
-            <span class="tag">CodePen</span>
-            <span class="tag">Figma</span>
-        </div>
-    </section>
 </main>
 
 <footer class="footer">
     <a href="https://mgks.dev" target="_blank">@mgks</a>
     <span class="dot">&middot;</span>
     <a href="https://github.com/sponsors/mgks" target="_blank">Sponsor</a>
+    <span class="dot">&middot;</span>
+    <span>MIT License</span>
 </footer>
 
 <script src="./embed-lite.global.min.js"></script>
