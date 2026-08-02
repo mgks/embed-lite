@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Lite | Zero-Dependency JavaScript Embed Tool</title>
+    <title>embed-lite</title>
     <link rel="icon" href="./src/favicons/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="./src/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./src/favicons/favicon-16x16.png">
     <link rel="apple-touch-icon" href="./src/favicons/apple-touch-icon.png">
-    <meta name="theme-color" content="#020617">
-    <meta name="description" content="A fast, zero-dependency JavaScript package mapping URLs to static, secure iframe embeds natively in Browsers and Node.js. No oEmbed API required.">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="Zero-dependency URL-to-HTML embed parser. Maps URLs to secure iframe embeds without oEmbed API calls.">
     <link rel="stylesheet" href="./src/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZHZQ0K9EN6"></script>
@@ -17,87 +17,75 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-ZHZQ0K9EN6');
     </script>
 </head>
 <body>
 
-<div class="social-nav">
-    <a href="https://github.com/mgks/embed-lite" target="_blank" aria-label="GitHub Repository" class="social-link social-github">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-    </a>
-    <a href="https://github.com/sponsors/mgks" target="_blank" aria-label="Sponsor @mgks" class="social-link social-sponsor">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="1 3 22 20"><path d="M7 3c-1.535 0-3.078.5-4.25 1.7-2.343 2.4-2.279 6.1 0 8.5L12 23l9.25-9.8c2.279-2.4 2.343-6.1 0-8.5-2.343-2.3-6.157-2.3-8.5 0l-.75.8-.75-.8C10.078 3.5 8.536 3 7 3"></path></svg>
-    </a>
-</div>
+<nav class="nav">
+    <a href="https://github.com/mgks/embed-lite" target="_blank" aria-label="GitHub" class="nav-link">GitHub</a>
+    <a href="https://www.npmjs.com/package/embed-lite" target="_blank" aria-label="npm" class="nav-link">npm</a>
+</nav>
 
-<div class="container">
-    <header>
-        <img src="./src/favicons/android-chrome-192x192.png" alt="Embed Lite Logo" width="85" style="margin: 0 auto 1rem; display: block;">
-        <h1>Embed Lite</h1>
-        <p class="subtitle">A framework-agnostic, zero-dependency Node Module & JavaScript Browser Package for rendering dynamic iframes strictly on-the-fly.</p>
-        
-        <div class="npm-badge">
-            <span class="npm-install-icon">❯</span> npm install embed-lite
-        </div>
+<main class="container">
+    <header class="header">
+        <img src="./src/favicons/android-chrome-192x192.png" alt="" width="56" height="56" class="logo">
+        <h1>embed-lite</h1>
+        <p class="tagline">Static URL-to-HTML embed parser. Zero dependencies, zero API calls, zero latency.</p>
+        <code class="install">npm install embed-lite</code>
     </header>
 
-    <div class="glass-panel">
-        <label for="url-input" style="font-weight: 500; color: var(--text-main); font-size: 0.95rem;">Test rendering any supported URL natively in the browser:</label>
-        <div class="input-group">
-            <input type="url" id="url-input" placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+    <section class="panel">
+        <label for="url-input" class="label">Try any supported URL</label>
+        <div class="input-row">
+            <input type="url" id="url-input" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" autofocus>
             <button id="render-btn">Render</button>
         </div>
 
-        <div id="results-container">
-            <div>
-                <div class="section-header">Live Embedded Payload Render</div>
-                <div class="preview-wrapper" id="preview-output"></div>
+        <div id="results-container" class="results">
+            <div class="result-block">
+                <div class="result-head">Preview</div>
+                <div class="preview" id="preview-output"></div>
             </div>
 
-            <div>
-                <div class="section-header">
-                    <span>Static HTML Output</span>
-                    <button id="copy-btn" class="copy-btn">Copy Output</button>
+            <div class="result-block">
+                <div class="result-head">
+                    <span>HTML</span>
+                    <button id="copy-btn" class="copy-btn">Copy</button>
                 </div>
-                <!-- Error text dumps securely into this block without crashing UI structure! -->
-                <pre id="code-output"></pre>
+                <pre id="code-output" class="code"></pre>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Supported Services Chips -->
-    <div class="services-wrapper">
-        <div class="services-title">Auto-Detect Routing Supports</div>
-        <div class="tags-container">
-            <span class="service-tag">YouTube</span>
-            <span class="service-tag">Vimeo</span>
-            <span class="service-tag">Twitter / X</span>
-            <span class="service-tag">SoundCloud</span>
-            <span class="service-tag">Instagram</span>
-            <span class="service-tag">Facebook</span>
-            <span class="service-tag">Reddit</span>
-            <span class="service-tag">Spotify</span>
-            <span class="service-tag">Google Maps</span>
-            <span class="service-tag">TikTok</span>
-            <span class="service-tag">LinkedIn</span>
-            <span class="service-tag">GitHub</span>
-            <span class="service-tag">Figma</span>
-            <span class="service-tag">CodePen</span>
+    <section class="services">
+        <div class="services-label">Supports</div>
+        <div class="tags">
+            <span class="tag">YouTube</span>
+            <span class="tag">Vimeo</span>
+            <span class="tag">Twitter / X</span>
+            <span class="tag">Spotify</span>
+            <span class="tag">SoundCloud</span>
+            <span class="tag">Instagram</span>
+            <span class="tag">Facebook</span>
+            <span class="tag">Reddit</span>
+            <span class="tag">TikTok</span>
+            <span class="tag">LinkedIn</span>
+            <span class="tag">GitHub Gist</span>
+            <span class="tag">Google Maps</span>
+            <span class="tag">CodePen</span>
+            <span class="tag">Figma</span>
         </div>
-    </div>
+    </section>
+</main>
 
-    <!-- Centralized Footer -->
-    <div class="footer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="1 3 22 20"><path d="M7 3c-1.535 0-3.078.5-4.25 1.7-2.343 2.4-2.279 6.1 0 8.5L12 23l9.25-9.8c2.279-2.4 2.343-6.1 0-8.5-2.343-2.3-6.157-2.3-8.5 0l-.75.8-.75-.8C10.078 3.5 8.536 3 7 3" fill="#8b5cf6"></path></svg> 
-        <b>{ <a href="https://mgks.dev" target="_blank">@mgks</a> / <a href="https://github.com/mgks/embed-lite" target="_blank">embed-lite</a> }</b>
-    </div>
-</div>
+<footer class="footer">
+    <a href="https://mgks.dev" target="_blank">@mgks</a>
+    <span class="dot">&middot;</span>
+    <a href="https://github.com/sponsors/mgks" target="_blank">Sponsor</a>
+</footer>
 
-<!-- Core Engine Payload -->
 <script src="./embed-lite.global.min.js"></script>
-
 <script src="./src/script.js"></script>
 </body>
 </html>
