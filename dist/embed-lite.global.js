@@ -24,6 +24,11 @@ var embedLite = (() => {
     embed: () => embed
   });
 
+  // src/utils.ts
+  function escapeAttr(value) {
+    return String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
   // src/services/youtube.ts
   var youtube = {
     name: "YouTube",
@@ -39,17 +44,16 @@ var embedLite = (() => {
       } else {
         videoId = url.searchParams.get("v") || url.pathname.replace(/^\/embed\//, "");
       }
-      videoId = videoId?.split(/[?&#/]/)[0];
-      if (!videoId) return null;
+      if (!/^[A-Za-z0-9_-]{6,}$/.test(videoId)) return null;
       let timeQuery = url.searchParams.get("t");
       let startQuery = "";
       if (timeQuery) {
         startQuery = `?start=${parseInt(timeQuery.replace(/\D/g, ""), 10)}`;
       }
       const src = `https://www.youtube.com/embed/${videoId}${startQuery}`;
-      const cx = options.className ? ` class="${options.className}"` : "";
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
       const shortAttr = isShort ? 'data-short="true" ' : "";
-      return `<iframe${cx} ${shortAttr}src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      return `<iframe${cx} ${shortAttr}src="${escapeAttr(src)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
     }
   };
 
@@ -61,8 +65,8 @@ var embedLite = (() => {
       const videoId = url.pathname.slice(1).split("/")[0];
       if (!/^\d+$/.test(videoId)) return null;
       const src = `https://player.vimeo.com/video/${videoId}`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} src="${src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(src)}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     }
   };
 
@@ -75,10 +79,11 @@ var embedLite = (() => {
       if (url.hostname === "x.com" || url.hostname === "www.x.com") {
         url.hostname = "twitter.com";
       }
-      const cx = options.className ? ` ${options.className}` : "";
+      const safeHref = escapeAttr(url.href);
+      const cx = options.className ? ` ${escapeAttr(options.className)}` : "";
       return `
 <blockquote class="twitter-tweet${cx}">
-    <a href="${url.href}"></a>
+    <a href="${safeHref}"></a>
   </blockquote>
   <script async src="https://platform.x.com/widgets.js" charset="utf-8"><\/script>`.trim();
     }
@@ -92,8 +97,8 @@ var embedLite = (() => {
       const path = url.pathname;
       if (!path.match(/^\/(track|album|playlist|episode|show)\/[a-zA-Z0-9]+/)) return null;
       const src = `https://open.spotify.com/embed${path}`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} style="border-radius:12px" src="${src}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} style="border-radius:12px" src="${escapeAttr(src)}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
     }
   };
 
@@ -104,8 +109,8 @@ var embedLite = (() => {
     match: (url) => url.hostname.includes("codepen.io") && url.pathname.includes("/pen/"),
     generate: (url, options = {}) => {
       const embedUrl = `https://codepen.io${url.pathname.replace("/pen/", "/embed/")}?default-tab=html%2Cresult`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} height="300" style="width: 100%; border: none;" scrolling="no" title="CodePen Embed" src="${embedUrl}" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} height="300" style="width: 100%; border: none;" scrolling="no" title="CodePen Embed" src="${escapeAttr(embedUrl)}" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>`;
     }
   };
 
@@ -116,8 +121,8 @@ var embedLite = (() => {
     match: (url) => url.hostname.includes("figma.com") && (url.pathname.includes("/file/") || url.pathname.includes("/design/") || url.pathname.includes("/proto/")),
     generate: (url, options = {}) => {
       const embedUrl = `https://www.figma.com/embed?embed_host=docmd&url=${encodeURIComponent(url.toString())}`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} style="border: none;" width="100%" height="450" src="${embedUrl}" allowfullscreen></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} style="border: none;" width="100%" height="450" src="${escapeAttr(embedUrl)}" allowfullscreen></iframe>`;
     }
   };
 
@@ -127,10 +132,11 @@ var embedLite = (() => {
     // e.g. https://www.reddit.com/r/.../comments/...
     match: (url) => url.hostname.includes("reddit.com") && url.pathname.includes("/comments/"),
     generate: (url, options = {}) => {
-      const cx = options.className ? ` ${options.className}` : "";
+      const safeHref = escapeAttr(url.href);
+      const cx = options.className ? ` ${escapeAttr(options.className)}` : "";
       return `
 <blockquote class="reddit-embed-bq${cx}" data-embed-showedits="false">
-    <a href="${url.href}"></a>
+    <a href="${safeHref}"></a>
   </blockquote>
   <script async="" src="https://embed.reddit.com/widgets.js" charset="UTF-8"><\/script>`.trim();
     }
@@ -142,8 +148,8 @@ var embedLite = (() => {
     match: (url) => url.hostname.includes("soundcloud.com"),
     generate: (url, options = {}) => {
       const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url.toString())}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="${escapeAttr(embedUrl)}"></iframe>`;
     }
   };
 
@@ -152,10 +158,11 @@ var embedLite = (() => {
     name: "Instagram",
     match: (url) => url.hostname.includes("instagram.com") && (url.pathname.includes("/p/") || url.pathname.includes("/reel/")),
     generate: (url, options = {}) => {
-      const cx = options.className ? ` ${options.className}` : "";
+      const safeHref = escapeAttr(url.href);
+      const cx = options.className ? ` ${escapeAttr(options.className)}` : "";
       return `
-<blockquote class="instagram-media${cx}" data-instgrm-permalink="${url.href}" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-    <a href="${url.href}"></a>
+<blockquote class="instagram-media${cx}" data-instgrm-permalink="${safeHref}" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+    <a href="${safeHref}"></a>
   </blockquote>
   <script async src="https://www.instagram.com/embed.js"><\/script>`.trim();
     }
@@ -169,8 +176,8 @@ var embedLite = (() => {
       const isVideo = url.pathname.includes("/videos/") || url.searchParams.has("v");
       const endpoint = isVideo ? "video.php" : "post.php";
       const embedUrl = `https://www.facebook.com/plugins/${endpoint}?href=${encodeURIComponent(url.toString())}&show_text=true`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} src="${embedUrl}" width="500" height="400" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(embedUrl)}" width="500" height="400" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
     }
   };
 
@@ -180,8 +187,8 @@ var embedLite = (() => {
     // Safely limit scope strictly to Maps "Share -> Embed a Map" natively generated iframes string formats.
     match: (url) => url.hostname.includes("google.com") && url.pathname.includes("/maps/embed") && url.searchParams.has("pb"),
     generate: (url, options = {}) => {
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} src="${url.toString()}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(url.toString())}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
     }
   };
 
@@ -192,8 +199,9 @@ var embedLite = (() => {
     generate: (url, options = {}) => {
       const videoId = url.pathname.split("/video/")[1]?.split(/[/?#]/)[0];
       if (!videoId) return null;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} src="https://www.tiktok.com/embed/v2/${videoId}" width="100%" height="700" frameborder="0" allowfullscreen></iframe>`;
+      if (!/^\d+$/.test(videoId)) return null;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="https://www.tiktok.com/embed/v2/${escapeAttr(videoId)}" width="100%" height="700" frameborder="0" allowfullscreen></iframe>`;
     }
   };
 
@@ -207,11 +215,11 @@ var embedLite = (() => {
         path += ".js";
       }
       const scriptSrc = `https://gist.github.com${path}`;
-      const cx = options.className ? ` class="${options.className}"` : "";
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
       const customStyle = `<style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif !important; } .gist .gist-file { border: 1px solid #e1e4e8 !important; border-radius: 8px !important; } .gist .gist-data { border-bottom: none !important; }</style>`;
-      const htmlPayload = `<html><head><base target="_blank">${customStyle}</head><body style="margin:0;padding:0;"><script src="${scriptSrc}"><\/script></body></html>`;
+      const htmlPayload = `<html><head><base target="_blank">${customStyle}</head><body style="margin:0;padding:0;"><script src="${escapeAttr(scriptSrc)}"><\/script></body></html>`;
       const embedUrl = `data:text/html;charset=utf-8,${encodeURIComponent(htmlPayload)}`;
-      return `<iframe${cx} src="${embedUrl}" width="100%" height="250" style="border:none;" frameborder="0" allowfullscreen="true"></iframe>`;
+      return `<iframe${cx} src="${escapeAttr(embedUrl)}" width="100%" height="250" style="border:none;" frameborder="0" allowfullscreen="true"></iframe>`;
     }
   };
 
@@ -231,8 +239,8 @@ var embedLite = (() => {
       }
       if (!urn) return null;
       const embedUrl = `https://www.linkedin.com/embed/feed/update/${urn}`;
-      const cx = options.className ? ` class="${options.className}"` : "";
-      return `<iframe${cx} src="${embedUrl}" height="450" width="100%" frameborder="0" allowfullscreen="" title="Embedded LinkedIn Post"></iframe>`;
+      const cx = options.className ? ` class="${escapeAttr(options.className)}"` : "";
+      return `<iframe${cx} src="${escapeAttr(embedUrl)}" height="450" width="100%" frameborder="0" allowfullscreen="" title="Embedded LinkedIn Post"></iframe>`;
     }
   };
 

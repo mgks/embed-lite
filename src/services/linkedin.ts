@@ -1,4 +1,5 @@
 import { EmbedProvider, EmbedOptions } from '../types.js';
+import { escapeAttr } from '../utils.js';
 
 export const linkedin: EmbedProvider = {
   name: 'LinkedIn',
@@ -20,9 +21,9 @@ export const linkedin: EmbedProvider = {
     if (!urn) return null;
 
     const embedUrl = `https://www.linkedin.com/embed/feed/update/${urn}`;
-    const cx = options.className ? ` class="${options.className}"` : '';
+    const cx = options.className ? ` class="${escapeAttr(options.className)}"` : '';
     
     // LinkedIn natively scales internally but bounds are structurally enforced via typical heights
-    return `<iframe${cx} src="${embedUrl}" height="450" width="100%" frameborder="0" allowfullscreen="" title="Embedded LinkedIn Post"></iframe>`;
+    return `<iframe${cx} src="${escapeAttr(embedUrl)}" height="450" width="100%" frameborder="0" allowfullscreen="" title="Embedded LinkedIn Post"></iframe>`;
   }
 };

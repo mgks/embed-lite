@@ -1,3 +1,4 @@
+import { escapeAttr } from '../utils.js';
 export const twitter = {
     name: 'Twitter',
     // Match x.com or twitter.com status links
@@ -6,11 +7,12 @@ export const twitter = {
         if (url.hostname === 'x.com' || url.hostname === 'www.x.com') {
             url.hostname = 'twitter.com';
         }
-        const cx = options.className ? ` ${options.className}` : '';
+        const safeHref = escapeAttr(url.href);
+        const cx = options.className ? ` ${escapeAttr(options.className)}` : '';
         // Twitter/X uses a standard blockquote + widgets.js payload for secure embedding without iframes.
         return `
 <blockquote class="twitter-tweet${cx}">
-    <a href="${url.href}"></a>
+    <a href="${safeHref}"></a>
   </blockquote>
   <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>`.trim();
     }

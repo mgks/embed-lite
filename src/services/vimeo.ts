@@ -1,4 +1,5 @@
 import { EmbedProvider, EmbedOptions } from '../types.js';
+import { escapeAttr } from '../utils.js';
 
 export const vimeo: EmbedProvider = {
   name: 'Vimeo',
@@ -8,7 +9,7 @@ export const vimeo: EmbedProvider = {
     if (!/^\d+$/.test(videoId)) return null;
 
     const src = `https://player.vimeo.com/video/${videoId}`;
-    const cx = options.className ? ` class="${options.className}"` : '';
-    return `<iframe${cx} src="${src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    const cx = options.className ? ` class="${escapeAttr(options.className)}"` : '';
+    return `<iframe${cx} src="${escapeAttr(src)}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
   }
 };

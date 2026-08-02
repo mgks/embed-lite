@@ -1,4 +1,5 @@
 import { EmbedProvider, EmbedOptions } from '../types.js';
+import { escapeAttr } from '../utils.js';
 
 export const youtube: EmbedProvider = {
   name: 'YouTube',
@@ -15,9 +16,9 @@ export const youtube: EmbedProvider = {
     } else {
       videoId = url.searchParams.get('v') || url.pathname.replace(/^\/embed\//, '');
     }
-    
-    videoId = videoId?.split(/[?&#/]/)[0]; // Sanitize edge cases
-    if (!videoId) return null;
+
+    // Strict allowlist: YouTube IDs are only [A-Za-z0-9_-]{6,}. Rejects anything else.
+    if (!/^[A-Za-z0-9_-]{6,}$/.test(videoId)) return null;
 
     let timeQuery = url.searchParams.get('t');
     let startQuery = '';
@@ -26,8 +27,8 @@ export const youtube: EmbedProvider = {
     }
 
     const src = `https://www.youtube.com/embed/${videoId}${startQuery}`;
-    const cx = options.className ? ` class="${options.className}"` : '';
+    const cx = options.className ? ` class="${escapeAttr(options.className)}"` : '';
     const shortAttr = isShort ? 'data-short="true" ' : '';
-    return `<iframe${cx} ${shortAttr}src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    return `<iframe${cx} ${shortAttr}src="${escapeAttr(src)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
   }
 };

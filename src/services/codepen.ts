@@ -1,4 +1,5 @@
 import { EmbedProvider, EmbedOptions } from '../types.js';
+import { escapeAttr } from '../utils.js';
 
 export const codepen: EmbedProvider = {
   name: 'CodePen',
@@ -7,8 +8,8 @@ export const codepen: EmbedProvider = {
   generate: (url, options = {}) => {
     // Convert /pen/ to /embed/
     const embedUrl = `https://codepen.io${url.pathname.replace('/pen/', '/embed/')}?default-tab=html%2Cresult`;
-    const cx = options.className ? ` class="${options.className}"` : '';
+    const cx = options.className ? ` class="${escapeAttr(options.className)}"` : '';
     
-    return `<iframe${cx} height="300" style="width: 100%; border: none;" scrolling="no" title="CodePen Embed" src="${embedUrl}" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>`;
+    return `<iframe${cx} height="300" style="width: 100%; border: none;" scrolling="no" title="CodePen Embed" src="${escapeAttr(embedUrl)}" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>`;
   }
 };

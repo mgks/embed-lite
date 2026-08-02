@@ -1,4 +1,5 @@
 import { EmbedProvider, EmbedOptions } from '../types.js';
+import { escapeAttr } from '../utils.js';
 
 export const facebook: EmbedProvider = {
   name: 'Facebook',
@@ -9,8 +10,8 @@ export const facebook: EmbedProvider = {
     const endpoint = isVideo ? 'video.php' : 'post.php';
     const embedUrl = `https://www.facebook.com/plugins/${endpoint}?href=${encodeURIComponent(url.toString())}&show_text=true`;
     
-    const cx = options.className ? ` class="${options.className}"` : '';
+    const cx = options.className ? ` class="${escapeAttr(options.className)}"` : '';
     // Facebook iframes normally require dynamic sizing, so we constrain its width strictly.
-    return `<iframe${cx} src="${embedUrl}" width="500" height="400" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
+    return `<iframe${cx} src="${escapeAttr(embedUrl)}" width="500" height="400" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
   }
 };
