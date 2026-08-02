@@ -46,37 +46,11 @@ body {
     flex-direction: column;
 }
 
-/* Nav */
-.nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 48px;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.5rem;
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    z-index: 100;
-}
-.nav-link {
-    font-size: 0.8125rem;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.15s;
-}
-.nav-link:hover { color: var(--text); }
-
 /* Container */
 .container {
     max-width: 680px;
     margin: 0 auto;
-    padding: 5rem 1.5rem 2rem;
+    padding: 4rem 1.5rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,7 +102,9 @@ body {
     font-family: var(--mono);
     font-size: 0.8125rem;
     color: var(--text);
-    padding: 0.625rem 3rem 0.625rem 1rem;
+    /* Right padding must clear the absolute-positioned copy button plus a gap
+       so the full install command never crops on any viewport. */
+    padding: 0.625rem 4.5rem 0.625rem 1rem;
     white-space: nowrap;
 }
 .copy-inline {
@@ -351,8 +327,7 @@ button:hover { opacity: 0.85; }
 
 /* Responsive */
 @media (max-width: 480px) {
-    .nav { padding: 0 1rem; }
-    .container { padding-top: 4rem; gap: 2rem; }
+    .container { padding-top: 3rem; gap: 2rem; }
     .input-row { flex-direction: column; }
     .hero h1 { font-size: 1.5rem; }
 }
