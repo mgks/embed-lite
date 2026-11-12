@@ -1,7 +1,7 @@
 {
   "name": "embed-lite",
   "version": "0.1.6",
-  "description": "Zero-dependency, static URL-to-HTML embed parser for markdown and browser.",
+  "description": "Zero-dependency, static URL-to-HTML embed parser for markdown and browsers.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,16 +33,13 @@
     "youtube",
     "twitter",
     "vimeo",
-    "facebook",
-    "instagram",
-    "tiktok",
     "spotify",
-    "soundcloud",
-    "maps",
-    "reddit",
     "github",
     "linkedin",
-    "x"
+    "rich-embeds",
+    "responsive-embeds",
+    "typescript",
+    "browser"
   ],
   "author": {
     "name": "Ghazi",
@@ -55,7 +52,7 @@
   "bugs": {
     "url": "https://github.com/mgks/embed-lite/issues"
   },
-  "homepage": "https://embed.mgks.dev",
-  "funding": "https://github.com/sponsors/mgks",
+  "homepage": "https://docmd.io",
+  "funding": "https://github.com/sponsors/docmd-io",
   "license": "MIT"
 }
